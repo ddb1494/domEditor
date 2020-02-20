@@ -9,6 +9,8 @@
         #mindTree { border:1px solid #ccc; width:100%; height: 300px; }
         #mindTree .space { border:1px solid blue; min-width:100px; min-height:50px; display:inline-block; margin: 4px; background: #fff;}
         #mindTree .selected { background-color: bisque ;}
+        #mindTree .space[data="color1"] {background: #ccc;}
+        #mindTree .space[data="color2"] {background: #fbff2c;}
     </style>
 </head>
 <body>
@@ -37,7 +39,7 @@
 
         <b>속성:</b>
         <input type="text" placeholder="속성명" value="data"  />
-        <input type="text" placeholder="속성값" value="aaa"  /><br>
+        <input type="text" placeholder="속성값" value="color1"  /><br>
         추가<button>attr</button>
         삭제<button>removeAttr</button>
         <!-- 기타<button>prop</button>
