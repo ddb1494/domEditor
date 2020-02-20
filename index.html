@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <style>
+        #mindTree { border:1px solid #ccc; width:100%; height: 300px; }
+        #mindTree .space { border:1px solid blue; min-width:100px; min-height:50px; display:inline-block; margin: 4px; background: #fff;}
+        #mindTree .selected { background-color: bisque ;}
+    </style>
+</head>
+<body>
+    <div id="mindTree"></div>
+    <div id="toolbar">
+        <b>태그:</b> 선택된자
+        <input type="text" placeholder="어디에(selector)" value="#mindTree"  />
+        태그넣기
+        <input type="text" placeholder="무엇을(html)" value="<div class='space'></div>"  /><br>
+
+        추가
+        <button>append</button>
+        <button>prepend</button>
+        <button>before</button>
+        <button>after</button>
+        수정 
+        <button>html</button>
+        <button>text</button>
+        삭제
+        <button>remove</button>
+        기타
+        <button>wrap</button>
+        <button>unwrap</button>
+        
+        <br><br>
+
+        <b>속성:</b>
+        <input type="text" placeholder="속성명" value="data"  />
+        <input type="text" placeholder="속성값" value="aaa"  /><br>
+        추가<button>attr</button>
+        삭제<button>removeAttr</button>
+        <!-- 기타<button>prop</button>
+        <button>removeProp</button> -->
+
+
+        <!-- input태그
+        <button>val</button> -->
+
+        
+
+    </div>
+    <script>
+        //---마인드 트리. mindtree
+        // js로 태그 넣거나 뺴거나. 속성 넣거나 빼거나. 
+        // 버튼으로 넣을것인가? 태그넣기. 
+        // 태그넣기 태그 수정. 속성/내용 넣기뺴기. 공간지정. 공간담기. 모든공간 리스트. 생성된 item리스트
+
+        $mindTree = $('#mindTree');
+        //선택자 클릭
+        $mindTree.on('click' , '.space', function(e){
+            e.stopPropagation();
+            let isSelect = $(this).hasClass('selected');
+            $selected = $('#mindTree *');
+            if($selected.length > 0){
+                $selected.removeClass('selected');
+            }
+            if(!isSelect) $(this).addClass('selected');
+            // console.log(this)
+        });
+        $mindTree.on('click' , '.selected', function(e){
+            console.log('aaaaaaaa')
+        });
+        
+        //버튼 클릭시 
+        var clickBtnEvent = function(){
+            let inputData = [];
+            let button = $(this).text();
+            $('#toolbar input').each(function(){
+                inputData.push( $(this).val() );
+            })
+            
+            //선택한 dom 우선처리
+            $selected = $('.selected');
+            if($selected.length > 0) inputData[0] = $selected;
+
+            // console.log(this,inputData, button)
+            if(button == 'remove' ) {
+                let p = inputData[0].parent();
+                $( inputData[0] )[button]();
+                $(p).addClass('selected')
+            }
+            else if(button == 'attr'){
+                $('.selected')[button](inputData[2], inputData[3] );
+            }
+            else if(button == 'removeAttr'){
+                $('.selected')[button]( inputData[2] );
+            }
+            else $( inputData[0] )[button]( inputData[1] );
+        }
+        $('#toolbar button').click(clickBtnEvent)
+
+        
+
+
+    </script>
+
+
+</body>
+</html>
